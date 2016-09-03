@@ -1,12 +1,39 @@
-# FCC-DataVis-Boilerplate
+# FCC-React-Recipes
 
-This is a simple boilerplate for the challenges on [FreeCodeCamp's](https://www.freecodecamp.com/)
- Data Visualization Path. It was made by ejecting Facebook/React team's fantastic
- [Create React App](https://facebook.github.io/react/blog/2016/07/22/create-apps-with-no-configuration.html)
- and adding some extra lines on the Webpack config file to support SASS/SCSS.
+##Install##
 
- Here is a link to Create React App's original [README](https://github.com/facebookincubator/create-react-app/blob/master/README.md).  
+In order to start using this project, you can either clone it or download it as
+a zip file. After which, you need to install the dependencies of the project.
 
- Since this is here mainly so that I can work on my Data Visualization challenges,
- I have totally ignored the production side of things. If there is anything that
- you find to make this boilerplate better, feel free to send a pull request.
+Acquire node from the [Node.js website](https://nodejs.com/en/).
+
+Install the node_modules dependencies with `npm install`
+
+## How to Use
+
+Commands:
+
+`npm start` will build, serve, and watch the project on `http://localhost:3000`
+
+## Project Description
+
+FreeCodeCamp has a series of projects with increasingly complex [requirements](https://www.freecodecamp.com/challenges/build-a-recipe-box).
+This project uses React and SASS to create a dynamic recipe box app.
+
+### Requirements
+1. I can create recipes that have names and ingredients.
+2. I can see an index view where the names of all the recipes are visible.
+3. I can click into any of those recipes to view it.
+4. I can edit these recipes.
+5. I can delete these recipes.
+
+### Technologies Used:
++ HTML5
++ SASS
++ Javascript
++ React
++ [Create React App](https://facebook.github.io/react/blog/2016/07/22/create-apps-with-no-configuration.html)
+
+### Live Demo
+Coming Soon
+---
