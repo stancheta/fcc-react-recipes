@@ -26,6 +26,7 @@ This project uses React and SASS to create a dynamic recipe box app.
 3. I can click into any of those recipes to view it.
 4. I can edit these recipes.
 5. I can delete these recipes.
+6. All new recipes I add are saved in my browser's local storage. If I refresh the page, these recipes will still be there.
 
 ### Technologies Used:
 + HTML5
