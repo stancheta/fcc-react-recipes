@@ -1,9 +1,9 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import App from './App';
+import RecipeDashboard from './RecipeDashboard';
 import './index.sass';
 
 ReactDOM.render(
-  <App />,
+  <RecipeDashboard />,
   document.getElementById('root')
 );
