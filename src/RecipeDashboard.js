@@ -29,11 +29,11 @@ const ToggleableRecipeForm = React.createClass({
 const RecipeIngredientList = React.createClass({
   render: function() {
     const ingredientList = this.props.ingredients.map(
-      (ingredient) => {
+      (ingredient, i) => {
         return (
-          <li>
-          {ingredient.ingredient}
-          <span className="amount">{ingredient.amount}</span>
+          <li key={this.props.id + '-' + i}>
+            <input type="checkbox" />
+            <label className="strikethrough">{ingredient}</label>
           </li>
         )
       }
@@ -61,6 +61,7 @@ const OpenableRecipe = React.createClass({
             <strong>Ingredients</strong>
             <hr/>
             <RecipeIngredientList
+              id={this.props.id}
               ingredients={this.props.ingredients}
             />
             <button className="btn btn-default">Edit</button>
@@ -91,6 +92,7 @@ const EditableRecipe = React.createClass({
     } else {
       return (
         <OpenableRecipe
+          id={this.props.id}
           title={this.props.title}
           ingredients={this.props.ingredients}
           description={this.props.description}
@@ -106,22 +108,25 @@ const EditableRecipeList = React.createClass({
     return (
       <div className="recipe-list">
         <EditableRecipe
+          id={1}
           title={"beef bao"}
-          ingredients={[{ingredient:'beef', amount:'1 pound'}, {ingredient:'bao mix', amount:'3 gallons'}, {ingredient:'flower', amount:'1 (for garnish)'}]}
+          ingredients={['1 pound of beef','3 cups of bao mix','1 flower (for garnish)']}
           description={"It's a bao"}
           editFormOpen={false}
           isOpen={false}
         />
         <EditableRecipe
+          id={2}
           title={"ham sandwich"}
-          ingredients={[{ingredient:'bread', amount:'2 slices'}, {ingredient:'ham', amount:'1 haunch'}, {ingredient:'cheese', amount:'1 slice'}]}
+          ingredients={['2 slices of bread', '1 haunch of ham','1 slice of cheese']}
           description={"sudo make me a sandwich"}
           editFormOpen={false}
           isOpen={true}
         />
         <EditableRecipe
+          id={3}
           title={"fried chicken"}
-          ingredients={[{ingredient:'chicken', amount:'3 lbs.'}, {ingredient:'oil', amount:'3 cups'}, {ingredient:'ketchup', amount:'1 packet'}]}
+          ingredients={['3 pounds chicken', '3 cups oil', 'One packet of ketchup']}
           description={"bawk bawk BAWK"}
           editFormOpen={true}
         />
