@@ -4,10 +4,26 @@
   margin: 3em auto
   max-width: 60em
 
+.Recipe
+  text-align: left
+
 .RecipeHeader
   background-color: $brand-primary
+  border-top-left-radius: $border-radius
+  border-top-right-radius: $border-radius
   color: $text-light
   font-size: 1.25em
-  margin-bottom: $division-size
   padding: 0.75em 1em
-  text-align: left
+
+.RecipeHeader-closed, .RecipeBody
+  border-bottom-left-radius: $border-radius
+  border-bottom-right-radius: $border-radius
+  margin-bottom: $division-size
+
+.RecipeBody
+  background-color: $bg-light
+  border: 1px solid $text-secondary
+  border-top: none
+  padding: 0.75em 1em
+  .description
+    color: $text-secondary

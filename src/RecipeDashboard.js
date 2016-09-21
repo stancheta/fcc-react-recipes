@@ -20,30 +20,60 @@ const ToggleableRecipeForm = React.createClass({
       );
     } else {
       return (
-        <button className="btn btn-primary">Add Recipe </button>
+        <button className="btn btn-lg btn-primary">Add Recipe </button>
       );
     }
   }
 });
 
+const RecipeIngredientList = React.createClass({
+  render: function() {
+    const ingredientList = this.props.ingredients.map(
+      (ingredient) => {
+        return (
+          <li>
+          {ingredient.ingredient}
+          <span className="amount">{ingredient.amount}</span>
+          </li>
+        )
+      }
+    );
+    return (
+      <ul className="ingredients">
+        {ingredientList}
+      </ul>
+    );
+  }
+});
+
 const OpenableRecipe = React.createClass({
   render: function() {
-    const header = (
-      <div className="RecipeHeader">
-        {this.props.title}
-      </div>
-    )
-
     if (this.props.isOpen) {
       return (
-        <div className="">
-        {header}
+        <div className="Recipe">
+          <div className="RecipeHeader">
+            {this.props.title}
+          </div>
+          <div className="RecipeBody">
+            <p className="description">
+              <em>{this.props.description}</em>
+            </p>
+            <strong>Ingredients</strong>
+            <hr/>
+            <RecipeIngredientList
+              ingredients={this.props.ingredients}
+            />
+            <button className="btn btn-default">Edit</button>
+            <button className="btn btn-danger">Delete</button>
+          </div>
         </div>
       );
     } else {
       return (
-        <div className="">
-          {header}
+        <div className="Recipe">
+          <div className="RecipeHeader RecipeHeader-closed">
+            {this.props.title}
+          </div>
         </div>
       );
     }
