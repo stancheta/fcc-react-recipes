@@ -39,7 +39,7 @@ const RecipeIngredientList = React.createClass({
       }
     );
     return (
-      <ul className="ingredients">
+      <ul className="IngredientList">
         {ingredientList}
       </ul>
     );
