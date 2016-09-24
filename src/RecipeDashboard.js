@@ -4,6 +4,7 @@ import './RecipeDashboard.sass';
 const RecipeForm = React.createClass({
   render: function() {
     const submitText = this.props.title ? "Update" : "Create";
+    const headerText = this.props.title ? "Edit Recipe" : "New Recipe";
     const ingredients = this.props.ingredients ? this.props.ingredients.join('; ') : "";
     const phTitle = "Recipe Title";
     const phDescription = "Recipe Description";
@@ -13,7 +14,7 @@ const RecipeForm = React.createClass({
     return (
       <div className="RecipeForm">
         <div className="RecipeHeader">
-          Edit Recipe
+          {headerText}
         </div>
         <div className="RecipeBody">
           <div className="RecipeField">
@@ -29,7 +30,10 @@ const RecipeForm = React.createClass({
             <textarea value={ingredients} placeholder={phIngredients}></textarea>
           </div>
           <button className="btn btn-default">{submitText}</button>
-          <button className="btn btn-danger">Cancel</button>
+          <button
+            className="btn btn-danger"
+            onClick={this.props.onFormClose}
+          >Cancel</button>
         </div>
       </div>
     );
@@ -37,14 +41,30 @@ const RecipeForm = React.createClass({
 });
 
 const ToggleableRecipeForm = React.createClass({
+  getInitialState: function() {
+    return {
+      isOpen: false
+    };
+  },
+  handleFormOpen: function() {
+    this.setState({isOpen: true});
+  },
+  handleFormClose: function() {
+    this.setState({isOpen: false});
+  },
   render: function() {
-    if(this.props.isOpen === true) {
+    if(this.state.isOpen === true) {
       return (
-        <RecipeForm/>
+        <RecipeForm
+          onFormClose={this.handleFormClose}
+        />
       );
     } else {
       return (
-        <button className="btn btn-lg btn-primary">Add Recipe </button>
+        <button
+          className="btn btn-lg btn-primary"
+          onClick={this.handleFormOpen}
+        >Add Recipe </button>
       );
     }
   }
@@ -75,7 +95,10 @@ const OpenableRecipe = React.createClass({
     if (this.props.isOpen) {
       return (
         <div className="Recipe">
-          <div className="RecipeHeader">
+          <div
+            className="RecipeHeader"
+            onClick={this.props.onRecipeClose}
+          >
             {this.props.title}
           </div>
           <div className="RecipeBody">
@@ -88,7 +111,10 @@ const OpenableRecipe = React.createClass({
               id={this.props.id}
               ingredients={this.props.ingredients}
             />
-            <button className="btn btn-default">Edit</button>
+            <button
+              className="btn btn-default"
+              onClick={this.props.onFormOpen}
+            >Edit</button>
             <button className="btn btn-danger">Delete</button>
           </div>
         </div>
@@ -96,7 +122,10 @@ const OpenableRecipe = React.createClass({
     } else {
       return (
         <div className="Recipe">
-          <div className="RecipeHeader RecipeHeader-closed">
+          <div
+            className="RecipeHeader RecipeHeader-closed"
+            onClick={this.props.onRecipeOpen}
+          >
             {this.props.title}
           </div>
         </div>
@@ -106,14 +135,33 @@ const OpenableRecipe = React.createClass({
 });
 
 const EditableRecipe = React.createClass({
+  getInitialState: function() {
+    return {
+      editFormOpen: false,
+      isOpen: false
+    };
+  },
+  handleFormOpen: function() {
+    this.setState({editFormOpen: true});
+  },
+  handleFormClose: function() {
+    this.setState({editFormOpen: false});
+  },
+  handleRecipeOpen: function() {
+    this.setState({isOpen: true});
+  },
+  handleRecipeClose: function() {
+    this.setState({isOpen: false});
+  },
   render: function() {
-    if (this.props.editFormOpen) {
+    if (this.state.editFormOpen) {
       return (
         <RecipeForm
           id={this.props.id}
           title={this.props.title}
           ingredients={this.props.ingredients}
           description={this.props.description}
+          onFormClose={this.handleFormClose}
         />
       );
     } else {
@@ -123,7 +171,10 @@ const EditableRecipe = React.createClass({
           title={this.props.title}
           ingredients={this.props.ingredients}
           description={this.props.description}
-          isOpen={this.props.isOpen}
+          onFormOpen={this.handleFormOpen}
+          isOpen={this.state.isOpen}
+          onRecipeOpen={this.handleRecipeOpen}
+          onRecipeClose={this.handleRecipeClose}
         />
       );
     }
@@ -168,7 +219,6 @@ const RecipeDashboard = React.createClass({
       <div className="RecipeDashboard">
         <EditableRecipeList />
         <ToggleableRecipeForm
-          isOpen={false}
         />
       </div>
     );
