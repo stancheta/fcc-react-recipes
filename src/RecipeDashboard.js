@@ -3,9 +3,34 @@ import './RecipeDashboard.sass';
 
 const RecipeForm = React.createClass({
   render: function() {
-    return (
-      <div className="">
+    const submitText = this.props.title ? "Update" : "Create";
+    const ingredients = this.props.ingredients ? this.props.ingredients.join(';') : "";
+    const phTitle = "Recipe Title";
+    const phDescription = "Recipe Description";
+    const phIngredients = "Enter Ingredients, separated by semicolons";
 
+
+    return (
+      <div className="RecipeForm">
+        <div className="RecipeHeader">
+          Edit Recipe
+        </div>
+        <div className="RecipeBody">
+          <div className="RecipeField">
+            <label>TITLE</label>
+            <input value={this.props.title} placeholder={phTitle}></input>
+          </div>
+          <div className="RecipeField">
+            <label>DESCRIPTION</label>
+            <textarea value={this.props.description} placeholder={phDescription}></textarea>
+          </div>
+          <div className="RecipeField">
+            <label>INGREDIENT</label>
+            <textarea value={ingredients} placeholder={phIngredients}></textarea>
+          </div>
+          <button className="btn btn-default">{submitText}</button>
+          <button className="btn btn-danger">Cancel</button>
+        </div>
       </div>
     );
   }
@@ -13,10 +38,9 @@ const RecipeForm = React.createClass({
 
 const ToggleableRecipeForm = React.createClass({
   render: function() {
-    if(this.props.isOpen) {
+    if(this.props.isOpen === true) {
       return (
-        <div className="">
-        </div>
+        <RecipeForm/>
       );
     } else {
       return (
@@ -86,7 +110,10 @@ const EditableRecipe = React.createClass({
     if (this.props.editFormOpen) {
       return (
         <RecipeForm
-
+          id={this.props.id}
+          title={this.props.title}
+          ingredients={this.props.ingredients}
+          description={this.props.description}
         />
       );
     } else {
@@ -141,7 +168,7 @@ const RecipeDashboard = React.createClass({
       <div className="RecipeDashboard">
         <EditableRecipeList />
         <ToggleableRecipeForm
-          isOpen={false}
+          isOpen={true}
         />
       </div>
     );
