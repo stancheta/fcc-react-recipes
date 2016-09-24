@@ -4,7 +4,7 @@ import './RecipeDashboard.sass';
 const RecipeForm = React.createClass({
   render: function() {
     const submitText = this.props.title ? "Update" : "Create";
-    const ingredients = this.props.ingredients ? this.props.ingredients.join(';') : "";
+    const ingredients = this.props.ingredients ? this.props.ingredients.join('; ') : "";
     const phTitle = "Recipe Title";
     const phDescription = "Recipe Description";
     const phIngredients = "Enter Ingredients, separated by semicolons";
@@ -168,7 +168,7 @@ const RecipeDashboard = React.createClass({
       <div className="RecipeDashboard">
         <EditableRecipeList />
         <ToggleableRecipeForm
-          isOpen={true}
+          isOpen={false}
         />
       </div>
     );
