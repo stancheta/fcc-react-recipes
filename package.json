@@ -38,7 +38,8 @@
   },
   "dependencies": {
     "react": "^15.2.1",
-    "react-dom": "^15.2.1"
+    "react-dom": "^15.2.1",
+    "uuid": "^2.0.3"
   },
   "scripts": {
     "start": "node ./scripts/start.js",

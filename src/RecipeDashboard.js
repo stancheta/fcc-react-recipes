@@ -1,5 +1,6 @@
 import React from 'react';
 import './RecipeDashboard.sass';
+import uuid from '../node_modules/uuid/uuid.js';
 
 const RecipeForm = React.createClass({
   render: function() {
@@ -182,32 +183,48 @@ const EditableRecipe = React.createClass({
 });
 
 const EditableRecipeList = React.createClass({
+  getInitialState: function() {
+    return {
+      recipes: [
+        {
+          title: 'beef bao',
+          id: uuid.v4(),
+          description: 'It\'s a bao.',
+          ingredients: ['1 pound of beef','3 cups of bao mix','1 flower (for garnish)'],
+          isOpen: false
+        },
+        {
+          title: 'ham sandwich',
+          id: uuid.v4(),
+          description: 'sudo make me a sandwich',
+          ingredients: ['1 pound of beef','3 cups of bao mix','1 flower (for garnish)'],
+          isOpen: false
+        },
+        {
+          title: 'fried chicken',
+          id: uuid.v4(),
+          description: 'bawk bawk BAWK',
+          ingredients: ['3 pounds chicken', '3 cups oil', 'One packet of ketchup'],
+          isOpen: false
+        }
+    ]
+    };
+  },
   render: function() {
+    const recipes = this.state.recipes.map((recipe) => {
+      return (
+        <EditableRecipe
+          title={recipe.title}
+          id={recipe.id}
+          description={recipe.description}
+          ingredients={recipe.ingredients}
+          isOpen={recipe.isOpen}
+        />
+      );
+    });
     return (
       <div className="recipe-list">
-        <EditableRecipe
-          id={1}
-          title={"beef bao"}
-          ingredients={['1 pound of beef','3 cups of bao mix','1 flower (for garnish)']}
-          description={"It's a bao"}
-          editFormOpen={false}
-          isOpen={false}
-        />
-        <EditableRecipe
-          id={2}
-          title={"ham sandwich"}
-          ingredients={['2 slices of bread', '1 haunch of ham','1 slice of cheese']}
-          description={"sudo make me a sandwich"}
-          editFormOpen={false}
-          isOpen={true}
-        />
-        <EditableRecipe
-          id={3}
-          title={"fried chicken"}
-          ingredients={['3 pounds chicken', '3 cups oil', 'One packet of ketchup']}
-          description={"bawk bawk BAWK"}
-          editFormOpen={true}
-        />
+        {recipes}
       </div>
     );
   }
