@@ -8,7 +8,6 @@
   text-align: left
 
 .RecipeHeader
-  background-color: $brand-primary
   border-top-left-radius: $border-radius
   border-top-right-radius: $border-radius
   color: $text-light
@@ -19,6 +18,16 @@
   border-bottom-left-radius: $border-radius
   border-bottom-right-radius: $border-radius
   margin-bottom: $division-size
+
+.RecipeHeader.RecipeHeaderEdit
+  background-color: darken($brand-primary, 20%)
+
+.RecipeHeader.RHToggle
+  background-color: $brand-primary
+  transition: background-color 0.5s ease
+  &:hover
+    background-color: $brand-accent
+    cursor: pointer
 
 .RecipeBody
   background-color: $bg-light
@@ -41,7 +50,7 @@
     font-weight: normal
 
 .RecipeField
-  margin-bottom: 1em 
+  margin-bottom: 1em
   label
     display: block
     font-size: 0.75em

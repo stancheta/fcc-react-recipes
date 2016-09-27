@@ -13,7 +13,7 @@ const RecipeForm = React.createClass({
 
     return (
       <div className="RecipeForm">
-        <div className="RecipeHeader">
+        <div className="RecipeHeader RecipeHeaderEdit">
           {headerText}
         </div>
         <div className="RecipeBody">
@@ -96,7 +96,7 @@ const OpenableRecipe = React.createClass({
       return (
         <div className="Recipe">
           <div
-            className="RecipeHeader"
+            className="RecipeHeader RHToggle"
             onClick={this.props.onRecipeClose}
           >
             {this.props.title}
@@ -123,7 +123,7 @@ const OpenableRecipe = React.createClass({
       return (
         <div className="Recipe">
           <div
-            className="RecipeHeader RecipeHeader-closed"
+            className="RecipeHeader RHToggle RecipeHeader-closed"
             onClick={this.props.onRecipeOpen}
           >
             {this.props.title}
