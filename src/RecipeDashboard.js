@@ -1,8 +1,20 @@
 import React from 'react';
 import './RecipeDashboard.sass';
 import uuid from '../node_modules/uuid/uuid.js';
+import helpers from './helpers';
 
 const RecipeForm = React.createClass({
+  handleSubmitForm: function() {
+    const ingredientArr = helpers.parseIngredients(this.refs.ingredients.value);
+    const details = {
+      id: this.props.id,
+      title: this.refs.title.value,
+      description: this.refs.description.value,
+      ingredients: ingredientArr
+    };
+    this.props.onFormClose();
+    this.props.onSubmitForm(details);
+  },
   render: function() {
     const submitText = this.props.title ? "Update" : "Create";
     const headerText = this.props.title ? "Edit Recipe" : "New Recipe";
@@ -20,17 +32,20 @@ const RecipeForm = React.createClass({
         <div className="RecipeBody">
           <div className="RecipeField">
             <label>TITLE</label>
-            <input value={this.props.title} placeholder={phTitle}></input>
+            <input defaultValue={this.props.title} placeholder={phTitle} ref='title'></input>
           </div>
           <div className="RecipeField">
             <label>DESCRIPTION</label>
-            <textarea value={this.props.description} placeholder={phDescription}></textarea>
+            <textarea defaultValue={this.props.description} placeholder={phDescription} ref='description'></textarea>
           </div>
           <div className="RecipeField">
-            <label>INGREDIENT</label>
-            <textarea value={ingredients} placeholder={phIngredients}></textarea>
+            <label>INGREDIENTS</label>
+            <textarea defaultValue={ingredients} placeholder={phIngredients} ref='ingredients'></textarea>
           </div>
-          <button className="btn btn-default">{submitText}</button>
+          <button
+            className="btn btn-default"
+            onClick={this.handleSubmitForm}
+          >{submitText}</button>
           <button
             className="btn btn-danger"
             onClick={this.props.onFormClose}
@@ -169,6 +184,7 @@ const EditableRecipe = React.createClass({
           ingredients={this.props.ingredients}
           description={this.props.description}
           onFormClose={this.handleFormClose}
+          onSubmitForm={this.props.onEditFormSubmit}
         />
       );
     } else {
@@ -196,10 +212,12 @@ const EditableRecipeList = React.createClass({
         <EditableRecipe
           title={recipe.title}
           id={recipe.id}
+          key={recipe.id}
           description={recipe.description}
           ingredients={recipe.ingredients}
           isOpen={recipe.isOpen}
           onDeleteClick={this.props.onDeleteClick}
+          onEditFormSubmit={this.props.onEditFormSubmit}
         />
       );
     });
@@ -226,7 +244,7 @@ const RecipeDashboard = React.createClass({
           title: 'ham sandwich',
           id: uuid.v4(),
           description: 'sudo make me a sandwich',
-          ingredients: ['1 pound of beef','3 cups of bao mix','1 flower (for garnish)'],
+          ingredients: ['2 pieces of bread','1 haunch of ham','1 slice of cheese'],
           isOpen: false
         },
         {
@@ -240,10 +258,27 @@ const RecipeDashboard = React.createClass({
     };
   },
   handleDeleteClick: function(recipeID) {
-    this.onDeleteClick(recipeID);
+    this.deleteRecipe(recipeID);
   },
-  onDeleteClick: function(recipeID) {
+  handleEditFormSubmit: function(details) {
+    this.updateRecipe(details);
+  },
+  deleteRecipe: function(recipeID) {
     this.setState({recipes: this.state.recipes.filter(r => r.id !== recipeID)});
+  },
+  updateRecipe: function(details) {
+    this.setState({recipes: this.state.recipes.map((recipe) => {
+      if (recipe.id === details.id) {
+        return Object.assign({}, recipe, {
+          title: details.title,
+          description: details.description,
+          ingredients: details.ingredients
+        });
+      }
+
+      return recipe;
+
+    })});
   },
   render: function() {
     return (
@@ -251,6 +286,7 @@ const RecipeDashboard = React.createClass({
         <EditableRecipeList
           recipes={this.state.recipes}
           onDeleteClick={this.handleDeleteClick}
+          onEditFormSubmit={this.handleEditFormSubmit}
         />
         <ToggleableRecipeForm
         />
