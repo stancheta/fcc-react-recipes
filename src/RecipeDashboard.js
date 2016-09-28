@@ -13,7 +13,7 @@ const RecipeForm = React.createClass({
       ingredients: ingredientArr
     };
     this.props.onFormClose();
-    this.props.onSubmitForm(details);
+    this.props.onFormSubmit(details);
   },
   render: function() {
     const submitText = this.props.title ? "Update" : "Create";
@@ -22,7 +22,6 @@ const RecipeForm = React.createClass({
     const phTitle = "Recipe Title";
     const phDescription = "Recipe Description";
     const phIngredients = "Enter Ingredients, separated by semicolons";
-
 
     return (
       <div className="RecipeForm">
@@ -73,6 +72,7 @@ const ToggleableRecipeForm = React.createClass({
       return (
         <RecipeForm
           onFormClose={this.handleFormClose}
+          onFormSubmit={this.props.onCreateFormSubmit}
         />
       );
     } else {
@@ -184,7 +184,7 @@ const EditableRecipe = React.createClass({
           ingredients={this.props.ingredients}
           description={this.props.description}
           onFormClose={this.handleFormClose}
-          onSubmitForm={this.props.onEditFormSubmit}
+          onFormSubmit={this.props.onEditFormSubmit}
         />
       );
     } else {
@@ -263,6 +263,9 @@ const RecipeDashboard = React.createClass({
   handleEditFormSubmit: function(details) {
     this.updateRecipe(details);
   },
+  handleCreateFormSubmit: function(details) {
+    this.createRecipe(details);
+  },
   deleteRecipe: function(recipeID) {
     this.setState({recipes: this.state.recipes.filter(r => r.id !== recipeID)});
   },
@@ -280,6 +283,10 @@ const RecipeDashboard = React.createClass({
 
     })});
   },
+  createRecipe: function(details) {
+    const r = helpers.newRecipe(details);
+    this.setState({recipes: this.state.recipes.concat(r)});
+  },
   render: function() {
     return (
       <div className="RecipeDashboard">
@@ -289,6 +296,7 @@ const RecipeDashboard = React.createClass({
           onEditFormSubmit={this.handleEditFormSubmit}
         />
         <ToggleableRecipeForm
+          onCreateFormSubmit={this.handleCreateFormSubmit}
         />
       </div>
     );
