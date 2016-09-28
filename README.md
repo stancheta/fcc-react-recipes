@@ -37,4 +37,5 @@ This project uses React and SASS to create a dynamic recipe box app.
 
 ### Live Demo
 http://codepen.io/stancheta/full/kkWNbA/
+
 ---
