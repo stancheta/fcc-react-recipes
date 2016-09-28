@@ -18,7 +18,7 @@ const RecipeForm = React.createClass({
   render: function() {
     const submitText = this.props.title ? "Update" : "Create";
     const headerText = this.props.title ? "Edit Recipe" : "New Recipe";
-    const ingredients = this.props.ingredients ? this.props.ingredients.join('; ') : "";
+    const ingredients = this.props.ingredients ? this.props.ingredients.join('; ') : "Recipe Ingredient";
     const phTitle = "Recipe Title";
     const phDescription = "Recipe Description";
     const phIngredients = "Enter Ingredients, separated by semicolons";
