@@ -7,7 +7,6 @@ module.exports = {
       id: uuid.v4(),
       description: details.description || 'Recipe Description',
       ingredients: details.ingredients || ['Recipe Ingredient'],
-      isOpen: false
     };
   },
   parseIngredients: function(ingredientString) {

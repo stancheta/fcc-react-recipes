@@ -1,7 +1,7 @@
 import React from 'react';
 import './RecipeDashboard.sass';
-import uuid from '../node_modules/uuid/uuid.js';
 import helpers from './helpers';
+import localStorageHelpers from './localStorageHelpers';
 
 const RecipeForm = React.createClass({
   handleSubmitForm: function() {
@@ -232,30 +232,14 @@ const EditableRecipeList = React.createClass({
 const RecipeDashboard = React.createClass({
   getInitialState: function() {
     return {
-      recipes: [
-        {
-          title: 'beef bao',
-          id: uuid.v4(),
-          description: 'It\'s a bao.',
-          ingredients: ['1 pound of beef','3 cups of bao mix','1 flower (for garnish)'],
-          isOpen: false
-        },
-        {
-          title: 'ham sandwich',
-          id: uuid.v4(),
-          description: 'sudo make me a sandwich',
-          ingredients: ['2 pieces of bread','1 haunch of ham','1 slice of cheese'],
-          isOpen: false
-        },
-        {
-          title: 'fried chicken',
-          id: uuid.v4(),
-          description: 'bawk bawk BAWK',
-          ingredients: ['3 pounds chicken', '3 cups oil', 'One packet of ketchup'],
-          isOpen: false
-        }
-    ]
+      recipes: []
     };
+  },
+  componentDidMount: function() {
+    this.setState({recipes: localStorageHelpers.getData()});
+  },
+  componentDidUpdate: function() {
+    localStorageHelpers.setData(this.state.recipes);
   },
   handleDeleteClick: function(recipeID) {
     this.deleteRecipe(recipeID);
