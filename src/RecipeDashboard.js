@@ -183,6 +183,27 @@ const EditableRecipe = React.createClass({
 });
 
 const EditableRecipeList = React.createClass({
+  render: function() {
+    const recipes = this.props.recipes.map((recipe) => {
+      return (
+        <EditableRecipe
+          title={recipe.title}
+          id={recipe.id}
+          description={recipe.description}
+          ingredients={recipe.ingredients}
+          isOpen={recipe.isOpen}
+        />
+      );
+    });
+    return (
+      <div className="recipe-list">
+        {recipes}
+      </div>
+    );
+  }
+});
+
+const RecipeDashboard = React.createClass({
   getInitialState: function() {
     return {
       recipes: [
@@ -211,30 +232,11 @@ const EditableRecipeList = React.createClass({
     };
   },
   render: function() {
-    const recipes = this.state.recipes.map((recipe) => {
-      return (
-        <EditableRecipe
-          title={recipe.title}
-          id={recipe.id}
-          description={recipe.description}
-          ingredients={recipe.ingredients}
-          isOpen={recipe.isOpen}
-        />
-      );
-    });
-    return (
-      <div className="recipe-list">
-        {recipes}
-      </div>
-    );
-  }
-});
-
-const RecipeDashboard = React.createClass({
-  render: function() {
     return (
       <div className="RecipeDashboard">
-        <EditableRecipeList />
+        <EditableRecipeList
+          recipes={this.state.recipes}
+        />
         <ToggleableRecipeForm
         />
       </div>
