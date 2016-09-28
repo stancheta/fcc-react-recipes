@@ -92,6 +92,9 @@ const RecipeIngredientList = React.createClass({
 });
 
 const OpenableRecipe = React.createClass({
+  handleDeleteClick: function() {
+    this.props.onDeleteClick(this.props.id);
+  },
   render: function() {
     if (this.props.isOpen) {
       return (
@@ -116,7 +119,10 @@ const OpenableRecipe = React.createClass({
               className="btn btn-default"
               onClick={this.props.onFormOpen}
             >Edit</button>
-            <button className="btn btn-danger">Delete</button>
+            <button
+              className="btn btn-danger"
+              onClick={this.handleDeleteClick}
+            >Delete</button>
           </div>
         </div>
       );
@@ -176,6 +182,7 @@ const EditableRecipe = React.createClass({
           isOpen={this.state.isOpen}
           onRecipeOpen={this.handleRecipeOpen}
           onRecipeClose={this.handleRecipeClose}
+          onDeleteClick={this.props.onDeleteClick}
         />
       );
     }
@@ -192,6 +199,7 @@ const EditableRecipeList = React.createClass({
           description={recipe.description}
           ingredients={recipe.ingredients}
           isOpen={recipe.isOpen}
+          onDeleteClick={this.props.onDeleteClick}
         />
       );
     });
@@ -231,11 +239,18 @@ const RecipeDashboard = React.createClass({
     ]
     };
   },
+  handleDeleteClick: function(recipeID) {
+    this.onDeleteClick(recipeID);
+  },
+  onDeleteClick: function(recipeID) {
+    this.setState({recipes: this.state.recipes.filter(r => r.id !== recipeID)});
+  },
   render: function() {
     return (
       <div className="RecipeDashboard">
         <EditableRecipeList
           recipes={this.state.recipes}
+          onDeleteClick={this.handleDeleteClick}
         />
         <ToggleableRecipeForm
         />
